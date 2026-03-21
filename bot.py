@@ -71,39 +71,27 @@ def start_keyboard():
 
 def gpt_consult(message):
     try:
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": 
-                 "Ты эксперт-бухгалтер Виктория Консалт. "
-                 "Услуги: Старт(6000₽), Лайт(9000₽), Уверенный(12000₽). "
-                 "Акция -15%. Рекомендуй пакеты, собирай лиды."},
-                {"role": "user", "content": message.text}
+                 "Ты эксперт-бухгалтер из Виктория Консалт (vicons.ru). "
+                 "Помогаешь ИП/ООО с бухгалтерией. "
+                 "Пакеты: Старт 6000₽ (ИП ОСНО), Лайт 9000₽ (УСН), Уверенный 12000₽. "
+                 "Акция: -15% новым клиентам. "
+                 "Отвечай профессионально, кратко, предлагай заявку менеджеру."},
+                {"role": "user", "content": f"{message.text}\n\nПомоги выбрать услугу."}
             ],
-            max_tokens=300
+            max_tokens=500,
+            temperature=0.3
         )
-        bot.reply_to(message, f"🤖 *Бухгалтер:* {response.choices[0].message.content}", parse_mode='Markdown')
+        answer = response.choices[0].message.content
+        bot.reply_to(message, f"🤖 *Консультация GPT-4o:*\n\n{answer}", parse_mode='Markdown')
+        
+        # Кнопка заявки
+        markup = InlineKeyboardMarkup()
+        markup.add(InlineKeyboardButton("📞 Заказать звонок менеджера", callback_data="lead"))
+        bot.send_message(message.chat.id, "Нужна помощь менеджера?", reply_markup=markup)
+        
     except Exception as e:
-        bot.reply_to(message, "❌ Ошибка GPT. Попробуйте позже.")
-
-@bot.message_handler(func=lambda m: True)
-def collect_lead(message):
-    data = {
-        'Имя': message.from_user.first_name or 'Неизвестно',
-        'Телефон': message.text,
-        'Email': '',
-        'Услуга': 'Консультация Виктория Консалт'
-    }
-    
-    try:
-        requests.post(LEAD_WEBHOOK, data=data, timeout=5)
-        bot.reply_to(message, 
-            "✅ *Заявка принята в CRM!*\n\n"
-            "📞 Менеджер *Виктория Консалт* перезвонит\n"
-            "в течение *15 минут*\n\n"
-            "Спасибо за доверие! 🎯", parse_mode='Markdown')
-    except:
-        bot.reply_to(message, "❌ Ошибка отправки. Напишите администратору.")
-
-print("🚀 Vicons Sales Bot запущен!")
-bot.polling(none_stop=True)
+        bot.reply_to(message, f"❌ Ошибка GPT: {str(e)[:100]}\n\nПопробуйте /start или заявку.")
