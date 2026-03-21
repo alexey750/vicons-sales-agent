@@ -18,7 +18,7 @@ def health():
 
 @bot.message_handler(commands=['start', '/start'])
 def start(message):
-    welcome = """👋 *Виктория Консалт* — IT и бизнес-решения!
+    welcome = """👋 *Виктория Консалт* — бухгалтерские и юридические услуги!
 
 *📍 Адрес:* ул. Маршала Тухачевского д.22 оф. 412
 *📧 Почта:* info@vicons.ru  
@@ -26,10 +26,9 @@ def start(message):
 *🌐 Сайт:* www.vicons.ru
 
 *Помогу с:*
-• Веб-разработка
-• CRM/ERP системы  
-• Бухгалтерия и регистрация
-• Маркетинг
+• юридические услуги
+• бухгалтерия
+• регистрация бизнеса
 
 Напиши задачу! 💼"""
     bot.reply_to(message, welcome, parse_mode='Markdown', disable_web_page_preview=True)
@@ -96,17 +95,16 @@ def health():
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    welcome_text = """👋 *Привет! Я Sales Agent компании Виктория Консалт* (vicons.ru)
+    welcome_text = """👋 *Привет! Я онлайн-агент компании Виктория Консалт* (vicons.ru)
 
 *Что мы делаем:*
-• Веб-разработка и сайты любой сложности
-• CRM системы под ключ
-• IT-консультации для бизнеса
-• Digital-маркетинг
+• юридические услуги
+• бухгалтерия
+• регистрация бизнеса
 
 *Напиши что нужно* — подберу решение + коммерческое предложение!
 
-📞 +7 (495) 777-77-77
+📞 8 (812) 207 13-76
 ✉️ info@vicons.ru"""
     bot.reply_to(message, welcome_text, parse_mode='Markdown')
 
@@ -121,8 +119,8 @@ def handle_message(message):
                     "content": """Ты *Sales Agent компании Виктория Консалт* (vicons.ru). 
 
 *Твоя роль:*
-- Всегда представляйся: "Sales Agent Виктория Консалт"
-- Консультируешь по IT: сайты, CRM, разработка, маркетинг
+- Всегда представляйся: "онлайн-агент Виктория Консалт"
+- Консультируешь по: юридические услуги, бухгалтерия, регистрация бизнеса
 - Быть убедительным продавцом 
 - Предлагать услуги + контакты
 - Заканчивать призывом к действию
@@ -141,7 +139,7 @@ def handle_message(message):
         answer = response.choices[0].message.content
         bot.reply_to(message, answer, parse_mode='Markdown')
     except Exception as e:
-        bot.reply_to(message, f"🤖 Извини, техническая ошибка. Напиши /start или звони +7 (495) 777-77-77")
+        bot.reply_to(message, f"🤖 Извини, техническая ошибка. Напиши /start или звони 8 (812) 207 13-76")
 
 def run_bot():
     print("🤖 Vicons Bot START - Виктория Консалт онлайн!")
