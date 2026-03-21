@@ -1,4 +1,6 @@
 import os
 print("🚀 1. DEBUG START")
 
-BOT_TOKEN
+# Правильная загрузка env
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+OPENAI_API_KEY
