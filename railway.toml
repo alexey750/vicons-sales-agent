@@ -1,1 +1,9 @@
+[build]
+  builder = "NIXPACKS"
+  buildCommand = "pip install -r requirements.txt"
 
+[deploy]
+  startCommand = "python bot.py"
+
+[build.environment]
+  PYTHON_VERSION = "3.12"
