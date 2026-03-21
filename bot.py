@@ -1,8 +1,4 @@
 import os
-import telebot
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
-import requests
+print("🚀 1. DEBUG START")
 
-print("🚀 Vicons Bot DEBUG START")
-
-BOT_TOKEN = os.getenv
+BOT_TOKEN
