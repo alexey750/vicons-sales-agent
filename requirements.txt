@@ -6,3 +6,4 @@ google-auth-oauthlib==1.2.1
 google-auth-httplib2==0.2.0
 requests==2.32.5
 python-dotenv==1.0.1
+flask==3.0.3
