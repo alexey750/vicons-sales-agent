@@ -155,3 +155,24 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
     print(f"🌐 Healthcheck на PORT {port}")
     app.run(host='0.0.0.0', port=port)
+import requests
+
+def send_to_sheets(name, phone, email, message, chat_id):
+    WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzeVABvlKDhWx2PBwsxV91sJu2qFaA74mDNotga-tFbE4sZao2yzaiyo5_GCivqW752/exec'  # из шага 3
+    
+    data = {
+        'chatId': chat_id,
+        'name': name,
+        'phone': phone,
+        'email': email,
+        'message': message
+    }
+    
+    try:
+        response = requests.post(WEBHOOK_URL, json=data)
+        print(f"✅ Лид сохранён: {response.json()}")
+    except Exception as e:
+        print(f"❌ Ошибка Sheets: {e}")
+
+# Вызывай в обработчиках лидов:
+# send_to_sheets(user_name, user_phone, user_email, user_msg, message.chat.id)
